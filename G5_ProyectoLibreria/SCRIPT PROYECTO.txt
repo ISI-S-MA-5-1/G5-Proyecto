@@ -1,0 +1,125 @@
+CREATE TABLE TIPO_ARTICULO(
+	id_tarticulo   serial not null,
+	descripcion character varying (20) constraint TIPO_ARTICULO_descripcion_NL not null
+);
+
+alter table TIPO_ARTICULO add constraint TIPO_ARTICULO_id_pk Primary key (id_tarticulo);
+
+insert into TIPO_ARTICULO values ('1', 'REVISTA');
+insert into TIPO_ARTICULO values ('2', 'LIBRO');
+insert into TIPO_ARTICULO values ('3', 'INFORMES TECNICOS');
+insert into TIPO_ARTICULO values ('4', 'CUENTOS');
+
+CREATE TABLE AUTOR(
+	id_autor          serial not null,
+	nombre            character varying (10) constraint AUTOR_nombre_NL not null,
+	apellido          character varying (10) constraint AUTOR_apellido_NL not null,
+	año_nacimiento    numeric (4)   constraint AUTOR_año_nacimiento_NL not null,
+	ciudad_nacimiento character varying (15) constraint AUTOR_ciudad_nacimiento_NL not null,
+	pais_nacimiento   character varying (15) constraint AUTOR_pais_nacimiento_NL not null,
+	año_fallecido     numeric (4)   constraint AUTOR_año_fallecido_NL not null
+);
+alter table AUTOR add constraint AUTOR_id_pk Primary Key (id_autor);
+
+insert into AUTOR values ('1', 'ADRIAN', 'VALAREZO', '1800', 'ARGENTINA', 'ARGENTINA', '1850');
+insert into AUTOR values ('2', 'CARLOS', 'VALLADAREZ', '1800', 'ARGENTINA', 'ARGENTINA', '1850');
+
+
+CREATE TABLE EDITORIAL(
+	id_editorial serial not null,
+	nombre       character varying (15) constraint EDITORIAL_nombre_NL not null,
+	telefono     character varying (20)  constraint EDITORIAL_telefono_NL not null,
+	direccion    character varying (20) constraint EDITORIAL_direccion_NL not null,
+	ciudad       character varying (15) constraint EDITORIAL_ciudad_NL not null,
+	provincia    character varying (15) constraint EDITORIAL_provincia_NL not null
+);
+alter table EDITORIAL add constraint EDITORIAL_id_pk Primary Key (id_editorial);
+
+insert into EDITORIAL values ('1', 'AGUILAR', '099234323', 'Av. Naciones Unidas', 'ARGENTINA', 'ARGENTINA');
+insert into EDITORIAL values ('2', 'SALAMANDRA', '099234222', 'Av. De Los Shyris', 'SAN SALVADOR', 'SAN SALVADOR');
+insert into EDITORIAL values ('3', 'ARCANGEL', '0987678323', ' Av.Orellana', 'ARGENTINA', 'ARGENTINA');
+
+
+CREATE TABLE ARTICULO(
+	id_articulo   serial not null,
+	titulo        character varying (15) constraint ARTICULO_titulo_NL not null,
+	año_edicion   character varying (4)   constraint ARTICULO_año_edicion_NL not null,
+	lugar_edicion character varying (20) constraint ARTICULO_lugar_edicion_NL not null,
+	n_paginas     integer   constraint ARTICULO_n_paginas_NL not null,
+	percha        integer   constraint ARTICULO_percha_NL not null,
+	n_ejemplares  integer   constraint ARTICULO_n_ejemplares_NL not null,
+	precio 	      double precision  constraint ARTICULO_precio_NL not null,
+	observaciones character varying (50) constraint ARTICULO_observaciones_NL not null,
+	cod_tarticulo integer   constraint ARTICULO_id_tarticulo_NL not null,
+	cod_autor     integer   constraint ARTICULO_cod_autor_NL not null,
+	cod_editorial integer   constraint ARTICULO_cod_editorial_NL not null
+);
+alter table ARTICULO add constraint ARTICULO_ISBN_pk Primary key (id_articulo);
+alter table ARTICULO add constraint ARTICULO_cod_tartic_fk Foreign key (cod_tarticulo) REFERENCES TIPO_ARTICULO (id_tarticulo);
+alter table ARTICULO add constraint ARTICULO_cod_autor_fk  Foreign key (cod_autor)  REFERENCES AUTOR (id_autor);
+alter table ARTICULO add constraint ARTICULO_cod_editorial_fk Foreign key (cod_editorial) REFERENCES EDITORIAL (id_editorial);
+
+insert into ARTICULO values ('1', 'MATEMATICA I', '1920', 'LOS ANGELES', '200', '5', '300', '80', 'PRIMERO DE COLEGIO', '2', '1', '1');
+insert into ARTICULO values ('2', 'MATEMATICA II', '1920', 'QUITO', '200', '5', '300', '80', 'PRIMERO DE COLEGIO', '2', '2', '2');
+insert into ARTICULO values ('3', 'EL MAÑANA', '1920', 'PERU', '200', '5', '300', '80', 'PRIMERO DE COLEGIO', '1', '1', '3');
+
+base de datos 5SProy
+ 
+CREATE TABLE tipousuario
+(
+  idtipousuario serial,
+  desctipusu character varying,
+  CONSTRAINT tipousuario_pkey PRIMARY KEY (idtipousuario)
+)
+
+insert into tipousuario values ('1', 'CLIENTE');
+insert into tipousuario values ('2', 'ADMINISTRADOR');
+
+
+CREATE TABLE USUARIO_SISTEMA(
+	id_usuariosistema serial not null,
+	nombre            character varying (20) constraint USUARIO_SISTEMA_nombre_NL not null,
+	apellido            character varying (20) constraint USUARIO_SISTEMA_apellido_NL not null,
+	contraseña        character varying (15) constraint USUARIO_SISTEMA_contraseña_NL not null,
+	cedula 		  character varying (15) constraint USUARIO_SISTEMA_cedula_NL not null,
+	nacionalidad 	  character varying (20) constraint USUARIO_SISTEMA_nacionalidad_NL not null,
+	telefono          character varying (15) constraint USUARIO_SISTEMA_telefono_NL not null,
+	sexo              character varying (10) constraint USUARIO_SISTEMA_sexo_NL not null,
+	direccion         character varying (25) constraint USUARIO_SISTEMA_direccion_NL not null,
+	cod_tipusuario integer
+);
+alter table USUARIO_SISTEMA add constraint USUARIO_SISTEMA_id_pk Primary key (id_usuariosistema);
+alter table USUARIO_SISTEMA add constraint USUARIO_SISTEMA_cod_tipusuar_fk Foreign key (cod_tipusuario) REFERENCES tipousuario (idtipousuario);
+
+insert into USUARIO_SISTEMA values ('1', 'JUAN', 'VALDEZ', '1234', '0923212088', 'ECUATORIANA', '0923233321', 'MASCULINO', 'DAULE', '1');
+insert into USUARIO_SISTEMA values ('2', 'JUANA', 'MEZA', '1234', '0945452088', 'ECUATORIANA', '0933333321', 'FEMENINO', 'AURORA', '2');
+insert into USUARIO_SISTEMA values ('3', 'SONIA', 'PEÑA', '1234', '0923212211', 'ECUATORIANA', '0923230989', 'FEMENINO', 'SUR', '1');
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
